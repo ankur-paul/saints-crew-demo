@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "checkJs": true,
+    "allowJs": true,
+    "noEmit": true,
+    "strict": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"]
+  },
+  "// note": "Only src/ is checked. scripts/ and tests/ are Node-side glue; checking them would need @types/node and add no safety to what ships.",
+  "include": ["src/**/*.js"]
+}

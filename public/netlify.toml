@@ -1,0 +1,5 @@
+# Netlify reads this from the published directory.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

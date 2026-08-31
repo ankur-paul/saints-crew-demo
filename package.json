@@ -1,0 +1,23 @@
+{
+  "name": "saints-crew",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Saints Crew storefront — a dependency-free static site.",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "node scripts/build.mjs",
+    "images": "node scripts/images.mjs",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "node --test \"tests/unit/*.test.js\"",
+    "test:e2e": "node tests/e2e.mjs",
+    "check": "tsc --noEmit -p jsconfig.json"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "typescript": "^7.0.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

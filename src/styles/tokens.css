@@ -1,0 +1,64 @@
+/* Design tokens. Every colour, font and measure the site uses is declared here —
+   change a brand colour in one place and it moves everywhere. */
+
+:root {
+  /* Surfaces, lightest to darkest */
+  --sc-shell:        #F7F3ED;  /* cart drawer, text on dark grounds */
+  --sc-paper:        #F4EFE8;  /* page ground */
+  --sc-sand:         #EAE2D7;  /* alternating section ground */
+  --sc-stone:        #DED3C6;  /* image placeholder while art loads */
+  --sc-ink:          #211D19;  /* primary text, dark grounds */
+
+  /* Text */
+  --sc-ink-soft:     #4A4239;  /* long-form body copy */
+  --sc-mute:         #6E6459;  /* secondary copy */
+  --sc-mute-light:   #8B8074;  /* captions, meta, disabled */
+  --sc-cream:        #EDE5DA;  /* text on --sc-ink */
+  --sc-cream-dim:    #E9E1D6;  /* announcement bar text */
+
+  /* Accent */
+  --sc-clay:         #A6714F;  /* eyebrows, hover, links */
+  --sc-select:       #E4D6C6;  /* ::selection */
+
+  /* Rules and veils, light ground */
+  --sc-rule-faint:   rgba(33, 29, 25, 0.09);
+  --sc-rule-soft:    rgba(33, 29, 25, 0.12);
+  --sc-rule:         rgba(33, 29, 25, 0.14);
+  --sc-rule-firm:    rgba(33, 29, 25, 0.16);
+  --sc-rule-strong:  rgba(33, 29, 25, 0.20);
+  --sc-rule-input:   rgba(33, 29, 25, 0.30);
+  --sc-rule-active:  rgba(33, 29, 25, 0.85);
+  --sc-border-idle:  rgba(33, 29, 25, 0.28);
+
+  /* Rules on dark ground */
+  --sc-rule-dark:    rgba(237, 229, 218, 0.16);
+  --sc-rule-dark-2:  rgba(237, 229, 218, 0.35);
+  --sc-cream-60:     rgba(237, 229, 218, 0.62);
+  --sc-cream-50:     rgba(237, 229, 218, 0.50);
+  --sc-cream-78:     rgba(237, 229, 218, 0.78);
+
+  /* Veils over photography */
+  --sc-veil-scrim:   rgba(20, 17, 14, 0.42);
+  --sc-veil-plate:   rgba(20, 17, 14, 0.28);
+  --sc-veil-tile:    linear-gradient(180deg, rgba(20,17,14,0) 45%, rgba(20,17,14,0.6) 100%);
+  --sc-veil-hero:    linear-gradient(180deg, rgba(20,17,14,0.4) 0%, rgba(20,17,14,0.2) 22%,
+                                     rgba(20,17,14,0.55) 48%, rgba(20,17,14,0.86) 100%);
+  --sc-header-bg:    rgba(244, 239, 232, 0.88);
+  --sc-shell-55:     rgba(247, 243, 237, 0.55);
+  --sc-shell-14:     rgba(247, 243, 237, 0.14);
+
+  /* Type */
+  --sc-font-display: Marcellus, Georgia, serif;
+  --sc-font-body:    Karla, Helvetica, sans-serif;
+
+  /* Measure */
+  --sc-page:         1440px;   /* widest container */
+  --sc-read:         1000px;   /* editorial pages */
+  --sc-gutter:       48px;
+  --sc-gutter-sm:    24px;
+  --sc-header-h:     108px;    /* sticky offset for in-page panels */
+
+  /* Motion */
+  --sc-ease:         cubic-bezier(.2, .7, .2, 1);
+  --sc-zoom:         1.05;
+}

@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&amp;family=Karla:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #F4EFE8; }
+  body { font-family: Karla, Helvetica, sans-serif; color: #211D19; -webkit-font-smoothing: antialiased; }
+  a { color: #211D19; text-decoration: none; }
+  a:hover { color: #A6714F; }
+  img { display: block; }
+  input, textarea, button { font-family: Karla, Helvetica, sans-serif; }
+  ::selection { background: #E4D6C6; }
+  @keyframes scFade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @keyframes scSlide { from { transform: translateX(100%); } to { transform: none; } }
+  @keyframes scRise { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+  .sc-cats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  @media (min-width: 1100px) { .sc-cats { grid-template-columns: repeat(4, 1fr); } }
+  .sc-footcols { display: grid; grid-template-columns: repeat(2, 1fr); gap: 36px 40px; align-content: start; align-items: start; flex: 0 0 auto; width: 100%; max-width: 660px; }
+  @media (min-width: 1025px) { .sc-footcols { grid-template-columns: repeat(4, 1fr); flex: 1 1 440px; width: auto; } }
+  .sc-desktop { display: flex; }
+  .sc-mobile { display: none; }
+  @media (max-width: 1024px) {
+    .sc-desktop { display: none !important; }
+    .sc-mobile { display: flex !important; }
+    .sc-split { flex-direction: column !important; align-items: stretch !important; }
+    .sc-pad { padding-left: 24px !important; padding-right: 24px !important; }
+  }
+</style>
+</helmet>
+
+<div style="min-height: 100vh; background: #F4EFE8; overflow-x: hidden">
+
+  <div style="background: #211D19; color: #E9E1D6; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; text-align: center; padding: 11px 16px; font-weight: 500">Complimentary shipping on orders over ₹6,000</div>
+
+  <header style="position: sticky; top: 0; z-index: 60; background: rgba(244,239,232,0.88); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(33,29,25,0.09)">
+    <div class="sc-pad" style="max-width: 1440px; margin: 0 auto; padding: 20px 48px; display: flex; align-items: center; justify-content: space-between; gap: 24px">
+      <div class="sc-mobile" style="width: 90px">
+        <button onClick="{{ toggleNav }}" aria-label="Menu" style="background: none; border: none; padding: 0; cursor: pointer; display: flex; flex-direction: column; gap: 5px; width: 22px">
+          <span style="display: block; height: 1px; background: #211D19; width: 100%"></span>
+          <span style="display: block; height: 1px; background: #211D19; width: 100%"></span>
+        </button>
+      </div>
+      <nav class="sc-desktop" style="gap: 34px; flex: 1; align-items: center">
+        <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+          <a href="#" onClick="{{ n.onClick }}" style="font-size: 12.5px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; white-space: nowrap; padding-bottom: 2px; border-bottom: 1px solid {{ n.line }}; color: {{ n.col }}">{{ n.label }}</a>
+        </sc-for>
+      </nav>
+      <a href="#" onClick="{{ goHome }}" style="font-family: Marcellus, Georgia, serif; font-size: clamp(19px, 2.4vw, 25px); letter-spacing: 0.3em; white-space: nowrap; text-transform: uppercase">Saints Crew</a>
+      <div style="flex: 1; display: flex; justify-content: flex-end; align-items: center; gap: 22px">
+        <button onClick="{{ toggleCart }}" style="background: none; border: none; padding: 0; cursor: pointer; font-size: 12.5px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; white-space: nowrap; color: #211D19">Bag ({{ count }})</button>
+      </div>
+    </div>
+  </header>
+
+  <sc-if value="{{ navOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; inset: 0; z-index: 90; background: #F4EFE8; padding: 28px 24px; animation: scFade 0.3s ease both">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 56px">
+        <span style="font-family: Marcellus, Georgia, serif; font-size: 19px; letter-spacing: 0.3em; text-transform: uppercase">Saints Crew</span>
+        <button onClick="{{ toggleNav }}" style="background: none; border: none; font-size: 26px; line-height: 1; cursor: pointer; color: #211D19">×</button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 22px">
+        <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+          <a href="#" onClick="{{ n.onClick }}" style="font-family: Marcellus, Georgia, serif; font-size: 34px; letter-spacing: 0.02em">{{ n.label }}</a>
+        </sc-for>
+      </div>
+      <div style="position: absolute; bottom: 34px; left: 24px; display: flex; gap: 20px">
+        <a href="https://www.instagram.com/saintscrewoutfits" target="_blank" style="font-size: 12.5px; letter-spacing: 0.15em; text-transform: uppercase">Instagram</a>
+        <a href="https://www.whatsapp.com/" target="_blank" style="font-size: 12.5px; letter-spacing: 0.15em; text-transform: uppercase">WhatsApp</a>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <main>
+      <section style="position: relative; height: clamp(540px, 86vh, 880px); overflow: hidden; background: #DED3C6">
+        <img src="assets/wide-hero.jpg" alt="Saints Crew autumn collection" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 12% 30%">
+        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,17,14,0.4) 0%, rgba(20,17,14,0.2) 22%, rgba(20,17,14,0.55) 48%, rgba(20,17,14,0.86) 100%)"></div>
+        <div class="sc-pad" style="position: relative; height: 100%; max-width: 1440px; margin: 0 auto; padding: 0 48px 76px; display: flex; flex-direction: column; justify-content: flex-end; animation: scRise 0.9s cubic-bezier(.2,.7,.2,1) both">
+          <p style="font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase; color: #F7F3ED; margin: 0 0 20px; font-weight: 600; text-shadow: 0 1px 14px rgba(20,17,14,0.7)">Autumn / Winter 26 — Men &amp; Women</p>
+          <h1 style="font-family: Marcellus, Georgia, serif; font-size: clamp(44px, 7vw, 104px); line-height: 0.98; letter-spacing: -0.015em; color: #F7F3ED; margin: 0 0 26px; max-width: 12ch; text-wrap: balance">Cloth that keeps its word.</h1>
+          <p style="font-size: clamp(15px, 1.3vw, 18px); line-height: 1.65; color: rgba(244,239,232,0.9); max-width: 34ch; margin: 0 0 34px; font-weight: 300">Knitwear, shirting and trousers cut in small runs from natural fibre. Made to be worn, mended and worn again.</p>
+          <div style="display: flex; gap: 14px; flex-wrap: wrap">
+            <a href="#" onClick="{{ goShop }}" style="background: #F7F3ED; color: #211D19; padding: 17px 40px; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600" style-hover="background: #A6714F; color: #F7F3ED">Shop the collection</a>
+            <a href="#" onClick="{{ goValues }}" style="border: 1px solid rgba(247,243,237,0.55); color: #F7F3ED; padding: 17px 40px; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600" style-hover="background: rgba(247,243,237,0.14); color: #F7F3ED">How it's made</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="sc-pad" style="max-width: 1440px; margin: 0 auto; padding: 100px 48px 20px">
+        <div class="sc-split" style="display: flex; gap: 56px; align-items: flex-end; justify-content: space-between">
+          <h2 style="font-family: Marcellus, Georgia, serif; font-size: clamp(30px, 3.6vw, 52px); line-height: 1.06; margin: 0; max-width: 20ch; letter-spacing: -0.01em">Four materials, chosen properly.</h2>
+          
+        </div>
+      </section>
+
+      <section class="sc-pad" style="max-width: 1440px; margin: 0 auto; padding: 48px 48px 100px">
+        <div class="sc-cats">
+            <a href="#" onClick="{{ goKnitwear }}" style="position: relative; display: block; overflow: hidden; background: #DED3C6; aspect-ratio: 3/4">
+              <img src="assets/tex-knit.jpg" alt="Knitwear" style="width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s cubic-bezier(.2,.7,.2,1)" style-hover="transform: scale(1.05)" />
+              <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,17,14,0) 45%, rgba(20,17,14,0.6) 100%); pointer-events: none"></div>
+              <div style="position: absolute; left: 26px; right: 26px; bottom: 26px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; pointer-events: none">
+                <div>
+                  <h3 style="font-family: Marcellus, Georgia, serif; font-size: 28px; color: #F7F3ED; margin: 0 0 4px">Knitwear</h3>
+                  <p style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(247,243,237,0.78); margin: 0">Undyed lambswool</p>
+                </div>
+                <span style="font-size: 22px; color: #F7F3ED; line-height: 1">→</span>
+              </div>
+            </a>
+            <a href="#" onClick="{{ goShirts }}" style="position: relative; display: block; overflow: hidden; background: #DED3C6; aspect-ratio: 3/4">
+              <img src="assets/tex-linen.jpg" alt="Shirts" style="width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s cubic-bezier(.2,.7,.2,1)" style-hover="transform: scale(1.05)" />
+              <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,17,14,0) 45%, rgba(20,17,14,0.6) 100%); pointer-events: none"></div>
+              <div style="position: absolute; left: 26px; right: 26px; bottom: 26px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; pointer-events: none">
+                <div>
+                  <h3 style="font-family: Marcellus, Georgia, serif; font-size: 28px; color: #F7F3ED; margin: 0 0 4px">Shirts</h3>
+                  <p style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(247,243,237,0.78); margin: 0">Washed linen</p>
+                </div>
+                <span style="font-size: 22px; color: #F7F3ED; line-height: 1">→</span>
+              </div>
+            </a>
+            <a href="#" onClick="{{ goTrousers }}" style="position: relative; display: block; overflow: hidden; background: #DED3C6; aspect-ratio: 3/4">
+              <img src="assets/tex-fabric.jpg" alt="Trousers" style="width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s cubic-bezier(.2,.7,.2,1)" style-hover="transform: scale(1.05)" />
+              <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,17,14,0) 45%, rgba(20,17,14,0.6) 100%); pointer-events: none"></div>
+              <div style="position: absolute; left: 26px; right: 26px; bottom: 26px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; pointer-events: none">
+                <div>
+                  <h3 style="font-family: Marcellus, Georgia, serif; font-size: 28px; color: #F7F3ED; margin: 0 0 4px">Trousers</h3>
+                  <p style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(247,243,237,0.78); margin: 0">Heavy cotton</p>
+                </div>
+                <span style="font-size: 22px; color: #F7F3ED; line-height: 1">→</span>
+              </div>
+            </a>
+            <a href="#" onClick="{{ goOuterwear }}" style="position: relative; display: block; overflow: hidden; background: #DED3C6; aspect-ratio: 3/4">
+              <img src="assets/tex-cotton.jpg" alt="Outerwear" style="width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s cubic-bezier(.2,.7,.2,1)" style-hover="transform: scale(1.05)" />
+              <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,17,14,0) 45%, rgba(20,17,14,0.6) 100%); pointer-events: none"></div>
+              <div style="position: absolute; left: 26px; right: 26px; bottom: 26px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; pointer-events: none">
+                <div>
+                  <h3 style="font-family: Marcellus, Georgia, serif; font-size: 28px; color: #F7F3ED; margin: 0 0 4px">Outerwear</h3>
+                  <p style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(247,243,237,0.78); margin: 0">Canvas and wool</p>
+                </div>
+                <span style="font-size: 22px; color: #F7F3ED; line-height: 1">→</span>
+              </div>
+            </a>
+        </div>
+      </section>
+
+      <section style="background: #EAE2D7; padding: 96px 0">
+        <div class="sc-pad" style="max-width: 1440px; margin: 0 auto; padding: 0 48px">
+          <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 44px; flex-wrap: wrap">
+            <h2 style="font-family: Marcellus, Georgia, serif; font-size: clamp(28px, 3.2vw, 44px); margin: 0; letter-spacing: -0.01em">This season's quiet favourites</h2>
+            <a href="#" onClick="{{ goShop }}" style="font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; border-bottom: 1px solid rgba(33,29,25,0.3); padding-bottom: 4px">View all</a>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px 20px">
+            <sc-for list="{{ featured }}" as="p">
+              <div>
+                <a href="#" onClick="{{ p.onOpen }}" style="display: block; overflow: hidden; background: #DED3C6; aspect-ratio: 4/5; margin-bottom: 16px">
+                  <div role="img" aria-label="{{ p.name }}" style="width: 100%; height: 100%; background-size: cover; background-position: center; background-image: url({{ p.img }}); transition: transform 1.1s cubic-bezier(.2,.7,.2,1)" style-hover="transform: scale(1.05)"></div>
+                </a>
+                <div style="display: grid; grid-template-columns: 1fr auto; column-gap: 14px; row-gap: 6px; align-items: start">
+                  <a href="#" onClick="{{ p.onOpen }}" style="font-size: 15.5px; font-weight: 500; line-height: 1.35">{{ p.name }}</a>
+                  <span style="font-size: 15px; color: #6E6459; white-space: nowrap; font-variant-numeric: tabular-nums; line-height: 1.35">{{ p.priceText }}</span>
+                  <p style="grid-column: 1 / -1; font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: #8B8074; margin: 0">{{ p.fibre }}</p>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <section class="sc-split" style="display: flex; min-height: 620px">
+        <div style="flex: 1; background: #211D19; color: #EDE5DA; display: flex; align-items: center; padding: clamp(40px, 6vw, 96px)">
+          <div style="max-width: 46ch">
+            <p style="font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: #A6714F; margin: 0 0 22px; font-weight: 600">Who we are</p>
+            <h2 style="font-family: Marcellus, Georgia, serif; font-size: clamp(30px, 3.6vw, 50px); line-height: 1.08; margin: 0 0 24px; letter-spacing: -0.01em">It started with two guys who loved hats.</h2>
+            <p style="font-size: 16px; line-height: 1.75; color: rgba(237,229,218,0.78); margin: 0 0 18px; font-weight: 300">One hat to rule them both, or so we thought. It turned out we were in it for the long game, and we have been on a mission to change menswear for the better ever since — and womenswear soon after.</p>
+            <p style="font-size: 16px; line-height: 1.75; color: rgba(237,229,218,0.78); margin: 0 0 34px; font-weight: 300">Everything we make is sustainably produced, in quantities small enough that we know where each garment went.</p>
+            <div style="display: flex; gap: 26px; flex-wrap: wrap">
+              <a href="#" onClick="{{ goAbout }}" style="color: #EDE5DA; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; border-bottom: 1px solid rgba(237,229,218,0.35); padding-bottom: 4px">About us</a>
+              <a href="#" onClick="{{ goValues }}" style="color: #EDE5DA; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; border-bottom: 1px solid rgba(237,229,218,0.35); padding-bottom: 4px">Our values</a>
+            </div>
+          </div>
+        </div>
+        <div style="flex: 1; min-height: 420px; background: #DED3C6">
+          <img src="assets/wide-atelier.jpg" alt="In the workshop" style="width: 100%; height: 100%; min-height: 420px; object-fit: cover; object-position: 42% center">
+        </div>
+      </section>
+
+      <section class="sc-pad" style="max-width: 1440px; margin: 0 auto; padding: 96px 48px">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 44px">
+          <sc-for list="{{ pillars }}" as="v" hint-placeholder-count="4">
+            <div style="border-top: 1px solid rgba(33,29,25,0.16); padding-top: 22px">
+              <p style="font-family: Marcellus, Georgia, serif; font-size: 15px; letter-spacing: 0.18em; text-transform: uppercase; margin: 0 0 12px">{{ v.title }}</p>
+              <p style="font-size: 15px; line-height: 1.7; color: #6E6459; margin: 0; font-weight: 300">{{ v.body }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isShop }}" hint-placeholder-val="{{ false }}">
+    <main class="sc-pad" style="max-width: 1440px; margin: 0 auto; padding: 72px 48px 100px; animation: scFade 0.4s ease both">
+      <h1 style="font-family: Marcellus, Georgia, serif; font-size: clamp(36px, 5vw, 68px); margin: 0 0 14px; letter-spacing: -0.015em">The collection</h1>
+      <p style="font-size: 16px; line-height: 1.7; color: #6E6459; max-width: 52ch; margin: 0 0 48px; font-weight: 300">{{ stockLine }} Natural fibre only, cut in small runs for men and women.</p>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 28px 40px; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(33,29,25,0.14); padding-bottom: 20px; margin-bottom: 40px">
+        <div style="display: flex; gap: 26px; flex-wrap: wrap">
+          <sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
+            <button onClick="{{ f.onClick }}" style="background: none; border: none; padding: 0 0 4px; cursor: pointer; font-size: 12.5px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600; color: {{ f.col }}; border-bottom: 1px solid {{ f.line }}">{{ f.label }}</button>
+          </sc-for>
+        </div>
+        <div style="display: flex; gap: 22px">
+          <sc-for list="{{ genders }}" as="g" hint-placeholder-count="3">
+            <button onClick="{{ g.onClick }}" style="background: none; border: none; padding: 0 0 4px; cursor: pointer; font-size: 12.5px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; color: {{ g.col }}; border-bottom: 1px solid {{ g.line }}">{{ g.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 28px 20px">
+        <sc-for list="{{ shown }}" as="p">
+          <div>
+            <a href="#" onClick="{{ p.onOpen }}" style="position: relative; display: block; overflow: hidden; background: #DED3C6; aspect-ratio: 4/5; margin-bottom: 16px">
+              <div role="img" aria-label="{{ p.name }}" style="width: 100%; height: 100%; background-size: cover; background-position: center; background-image: url({{ p.img }}); transition: transform 1.1s cubic-bezier(.2,.7,.2,1)" style-hover="transform: scale(1.05)"></div>
+            </a>
+            <div style="display: grid; grid-template-columns: 1fr auto; column-gap: 14px; row-gap: 6px; align-items: start">
+              <a href="#" onClick="{{ p.onOpen }}" style="font-size: 15.5px; font-weight: 500; line-height: 1.35">{{ p.name }}</a>
+              <span style="font-size: 15px; color: #6E6459; white-space: nowrap; font-variant-numeric: tabular-nums; line-height: 1.35">{{ p.priceText }}</span>
+              <p style="grid-column: 1 / -1; font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: #8B8074; margin: 0">{{ p.fibre }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+        <div style="border-top: 1px solid rgba(33,29,25,0.14); padding: 72px 0 8px; max-width: 46ch">
+          <h2 style="font-family: Marcellus, Georgia, serif; font-size: clamp(24px, 2.6vw, 34px); line-height: 1.15; margin: 0 0 14px; letter-spacing: -0.01em">Nothing in this combination yet.</h2>
+          <p style="font-size: 16px; line-height: 1.75; color: #6E6459; margin: 0 0 26px; font-weight: 300">We cut in small runs, so some categories sit empty between deliveries. Everything else is still here.</p>
+          <a href="#" onClick="{{ resetFilters }}" style="display: inline-block; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; border-bottom: 1px solid rgba(33,29,25,0.3); padding-bottom: 4px">Show the whole collection</a>
+        </div>
+      </sc-if>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isProduct }}" hint-placeholder-val="{{ false }}">
+    <main class="sc-pad" style="max-width: 1440px; margin: 0 auto; padding: 32px 48px 100px; animation: scFade 0.4s ease both">
+      <button onClick="{{ goShop }}" style="background: none; border: none; padding: 0; margin: 0 0 28px; cursor: pointer; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; color: #6E6459">← Back to collection</button>
+      <div class="sc-split" style="display: flex; gap: 64px; align-items: flex-start">
+        <div style="flex: 1.15; min-width: 280px; background: #DED3C6; aspect-ratio: 4/5; overflow: hidden">
+          <div role="img" aria-label="{{ pd.name }}" style="width: 100%; height: 100%; background-size: cover; background-position: center; background-image: url({{ pd.img }})"></div>
+        </div>
+        <div style="flex: 0.85; min-width: 280px; position: sticky; top: 108px">
+          <p style="font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #A6714F; margin: 0 0 14px; font-weight: 600">{{ pd.cat }}</p>
+          <h1 style="font-family: Marcellus, Georgia, serif; font-size: clamp(30px, 3.4vw, 46px); line-height: 1.1; margin: 0 0 12px; letter-spacing: -0.01em">{{ pd.name }}</h1>
+          <p style="font-size: 20px; margin: 0 0 26px; font-variant-numeric: tabular-nums">{{ pd.priceText }}</p>
+          <p style="font-size: 16px; line-height: 1.75; color: #4A4239; margin: 0 0 32px; font-weight: 300">{{ pd.desc }}</p>
+
+          <p style="font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; margin: 0 0 12px">Size</p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px">
+            <sc-for list="{{ pd.sizes }}" as="s" hint-placeholder-count="5">
+              <button onClick="{{ s.onClick }}" style="cursor: pointer; min-width: 56px; padding: 13px 8px; font-size: 13px; letter-spacing: 0.08em; font-weight: 500; background: {{ s.bg }}; color: {{ s.fg }}; border: 1px solid {{ s.bd }}">{{ s.label }}</button>
+            </sc-for>
+          </div>
+          <p style="font-size: 13px; color: #8B8074; margin: 0 0 26px">{{ sizeHint }}</p>
+
+          <button onClick="{{ addToBag }}" style="width: 100%; background: #211D19; color: #F7F3ED; border: none; padding: 19px; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; cursor: pointer" style-hover="background: #A6714F">Add to bag</button>
+
+          <div style="margin-top: 40px; border-top: 1px solid rgba(33,29,25,0.14)">
+            <sc-for list="{{ pd.specs }}" as="sp" hint-placeholder-count="3">
+              <div style="display: flex; gap: 20px; padding: 15px 0; border-bottom: 1px solid rgba(33,29,25,0.09)">
+                <span style="flex: 0 0 130px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #8B8074; font-weight: 600">{{ sp.k }}</span>
+                <span style="font-size: 15px; line-height: 1.6; color: #4A4239; font-weight: 300">{{ sp.v }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
+    <main style="animation: scFade 0.4s ease both">
+      <section class="sc-pad" style="max-width: 1000px; margin: 0 auto; padding: 96px 48px 64px">
+        <p style="font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: #A6714F; margin: 0 0 24px; font-weight: 600">About us</p>
+        <h1 style="font-family: Marcellus, Georgia, serif; font-size: clamp(36px, 5.4vw, 72px); line-height: 1.04; margin: 0 0 32px; letter-spacing: -0.02em; text-wrap: balance">Two guys, and one hat to rule them both.</h1>
+        <p style="font-size: clamp(17px, 1.5vw, 21px); line-height: 1.7; color: #4A4239; margin: 0; font-weight: 300; max-width: 62ch">Or so we thought. It turned out we were in it for the long game, and are on a mission to change menswear for the better.</p>
+      </section>
+      <section style="background: #DED3C6">
+        <img src="assets/wide-knit.jpg" alt="Saints Crew knitwear" style="width: 100%; height: clamp(320px, 52vh, 620px); object-fit: cover; object-position: 74% center">
+      </section>
+      <section class="sc-pad" style="max-width: 1000px; margin: 0 auto; padding: 72px 48px 96px">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 40px 56px">
+          <sc-for list="{{ story }}" as="s" hint-placeholder-count="4">
+            <div>
+              <h3 style="font-family: Marcellus, Georgia, serif; font-size: 22px; margin: 0 0 12px">{{ s.title }}</h3>
+              <p style="font-size: 15.5px; line-height: 1.75; color: #6E6459; margin: 0; font-weight: 300">{{ s.body }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+      <section style="background: #EAE2D7">
+        <div class="sc-pad" style="max-width: 1000px; margin: 0 auto; padding: 88px 48px">
+          <p style="font-family: Marcellus, Georgia, serif; font-size: clamp(24px, 3vw, 40px); line-height: 1.24; margin: 0 0 56px; letter-spacing: -0.01em; max-width: 34ch">Fashion industry has been operating on unsustainable business models for too long. We wanted to change and challenge that.</p>
+          <blockquote style="margin: 0; padding-top: 40px; border-top: 1px solid rgba(33,29,25,0.2)">
+            <p style="font-size: clamp(17px, 1.7vw, 22px); line-height: 1.65; color: #4A4239; margin: 0 0 18px; font-weight: 300; max-width: 52ch">“If you push through that feeling of being scared, that feeling of taking risk, really amazing things can happen."</p>
+            <footer style="font-size: 12.5px; letter-spacing: 0.16em; text-transform: uppercase; color: #8B8074; font-weight: 600">Marissa Mayer, businesswoman and investor</footer>
+          </blockquote>
+        </div>
+      </section>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isValues }}" hint-placeholder-val="{{ false }}">
+    <main style="animation: scFade 0.4s ease both">
+      <section class="sc-pad" style="max-width: 1000px; margin: 0 auto; padding: 96px 48px 56px">
+        <p style="font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: #A6714F; margin: 0 0 24px; font-weight: 600">Our values</p>
+        <h1 style="font-family: Marcellus, Georgia, serif; font-size: clamp(36px, 5.4vw, 72px); line-height: 1.04; margin: 0 0 32px; letter-spacing: -0.02em; text-wrap: balance">All of our products are sustainably made.</h1>
+        <p style="font-size: clamp(17px, 1.5vw, 21px); line-height: 1.7; color: #4A4239; margin: 0; font-weight: 300; max-width: 60ch">That claim only means something if we can show the work. Here is how a Saints Crew garment gets made, from fibre to the box it arrives in.</p>
+      </section>
+      <section class="sc-pad" style="max-width: 1100px; margin: 0 auto; padding: 40px 48px 96px">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+          <div class="sc-split" style="display: flex; gap: 48px; padding: 40px 0; border-top: 1px solid rgba(33,29,25,0.16)">
+            <p style="flex: 0 0 90px; font-family: Marcellus, Georgia, serif; font-size: 34px; color: #A6714F; margin: 0; line-height: 1">{{ s.n }}</p>
+            <div style="flex: 1">
+              <h3 style="font-family: Marcellus, Georgia, serif; font-size: clamp(22px, 2.4vw, 30px); margin: 0 0 12px">{{ s.title }}</h3>
+              <p style="font-size: 16px; line-height: 1.75; color: #6E6459; margin: 0; max-width: 62ch; font-weight: 300">{{ s.body }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </section>
+      <section style="background: #EAE2D7">
+        <div class="sc-pad" style="max-width: 1100px; margin: 0 auto; padding: 88px 48px">
+          <h2 style="font-family: Marcellus, Georgia, serif; font-size: clamp(28px, 3.4vw, 46px); margin: 0 0 48px; letter-spacing: -0.01em">What we stand for</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 44px 56px">
+            <sc-for list="{{ stands }}" as="t" hint-placeholder-count="4">
+              <div>
+                <h3 style="font-family: Marcellus, Georgia, serif; font-size: 24px; margin: 0 0 12px">{{ t.title }}</h3>
+                <p style="font-size: 15.5px; line-height: 1.75; color: #6E6459; margin: 0; font-weight: 300">{{ t.body }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+    <main class="sc-pad" style="max-width: 1200px; margin: 0 auto; padding: 96px 48px 100px; animation: scFade 0.4s ease both">
+      <div class="sc-split" style="display: flex; gap: 72px; align-items: flex-start">
+        <div style="flex: 1; min-width: 280px">
+          <h1 style="font-family: Marcellus, Georgia, serif; font-size: clamp(34px, 4.6vw, 60px); line-height: 1.06; margin: 0 0 24px; letter-spacing: -0.015em">Talk to us</h1>
+          <p style="font-size: 16px; line-height: 1.75; color: #6E6459; margin: 0 0 20px; max-width: 46ch; font-weight: 300">Whether you're interested in making an order but require some further information, or want to talk about a partnership opportunity, you can reach us via the below form.</p>
+          <p style="font-size: 16px; line-height: 1.75; color: #6E6459; margin: 0 0 44px; max-width: 44ch; font-weight: 300">Sizing, alterations, an order that has gone astray — a real person answers, usually within a day.</p>
+          <sc-for list="{{ contactRows }}" as="c" hint-placeholder-count="3">
+            <div style="padding: 18px 0; border-top: 1px solid rgba(33,29,25,0.14)">
+              <p style="font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #8B8074; margin: 0 0 6px; font-weight: 600">{{ c.k }}</p>
+              <p style="font-size: 16px; line-height: 1.6; color: #211D19; margin: 0">{{ c.v }}</p>
+            </div>
+          </sc-for>
+          <div style="padding-top: 40px">
+            <p style="font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #8B8074; margin: 0 0 16px; font-weight: 600">Other pages</p>
+            <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-start">
+              <a href="#" onClick="{{ goShipping }}" style="font-size: 15px; border-bottom: 1px solid rgba(33,29,25,0.22); padding-bottom: 2px">Shipping &amp; returns</a>
+              <a href="https://www.saintscrew.co.in/privacy-policy" target="_blank" style="font-size: 15px; border-bottom: 1px solid rgba(33,29,25,0.22); padding-bottom: 2px">Privacy Policy</a>
+              <a href="https://www.saintscrew.co.in/terms-and-conditions" target="_blank" style="font-size: 15px; border-bottom: 1px solid rgba(33,29,25,0.22); padding-bottom: 2px">Terms conditions</a>
+              <a href="#" onClick="{{ goSize }}" style="font-size: 15px; border-bottom: 1px solid rgba(33,29,25,0.22); padding-bottom: 2px">Size guide</a>
+            </div>
+          </div>
+        </div>
+        <div style="flex: 1; min-width: 280px; background: #EAE2D7; padding: clamp(28px, 4vw, 48px); position: sticky; top: 108px">
+          <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+            <div style="padding: 40px 0">
+              <h3 style="font-family: Marcellus, Georgia, serif; font-size: 28px; margin: 0 0 12px">Thank you.</h3>
+              <p style="font-size: 15.5px; line-height: 1.7; color: #6E6459; margin: 0; font-weight: 300">Your note is with us. We will reply to the address you gave.</p>
+            </div>
+          </sc-if>
+          <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+            <div style="display: flex; flex-direction: column; gap: 20px">
+              <div>
+                <label style="display: block; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; margin-bottom: 8px">Name</label>
+                <input value="{{ form.name }}" onChange="{{ onName }}" style="width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(33,29,25,0.3); padding: 10px 0; font-size: 16px; color: #211D19; outline: none">
+              </div>
+              <div>
+                <label style="display: block; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; margin-bottom: 8px">Email</label>
+                <input value="{{ form.email }}" onChange="{{ onEmail }}" style="width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(33,29,25,0.3); padding: 10px 0; font-size: 16px; color: #211D19; outline: none">
+              </div>
+              <div>
+                <label style="display: block; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; margin-bottom: 8px">Message</label>
+                <textarea value="{{ form.msg }}" onChange="{{ onMsg }}" rows="6" style="width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(33,29,25,0.3); padding: 10px 0; font-size: 16px; color: #211D19; outline: none; resize: vertical"></textarea>
+              </div>
+              <button onClick="{{ onSend }}" style="align-self: flex-start; background: #211D19; color: #F7F3ED; border: none; padding: 17px 44px; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; cursor: pointer" style-hover="background: #A6714F">Send</button>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isBlog }}" hint-placeholder-val="{{ false }}">
+    <main class="sc-pad" style="max-width: 1000px; margin: 0 auto; padding: 96px 48px 110px; animation: scFade 0.4s ease both">
+      <p style="font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: #A6714F; margin: 0 0 24px; font-weight: 600">Journal</p>
+      <h1 style="font-family: Marcellus, Georgia, serif; font-size: clamp(36px, 5.4vw, 72px); line-height: 1.04; margin: 0 0 32px; letter-spacing: -0.02em">Blog</h1>
+      <div style="border-top: 1px solid rgba(33,29,25,0.16); padding-top: 40px; max-width: 60ch">
+        <p style="font-size: 17px; line-height: 1.75; color: #4A4239; margin: 0 0 28px; font-weight: 300">No posts yet. Notes from the workshop — dye lots, mill visits, repairs we did not expect — will be published here as they are written.</p>
+        <a href="#" onClick="{{ goShop }}" style="font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; border-bottom: 1px solid rgba(33,29,25,0.3); padding-bottom: 4px">Shop the collection</a>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isShipping }}" hint-placeholder-val="{{ false }}">
+    <main class="sc-pad" style="max-width: 860px; margin: 0 auto; padding: 96px 48px 110px; animation: scFade 0.4s ease both">
+      <p style="font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: #A6714F; margin: 0 0 24px; font-weight: 600">Info</p>
+      <h1 style="font-family: Marcellus, Georgia, serif; font-size: clamp(32px, 4.6vw, 58px); line-height: 1.06; margin: 0 0 40px; letter-spacing: -0.018em">Returns &amp; Refunds policy</h1>
+      <div style="display: flex; flex-direction: column; gap: 20px; font-size: 16px; line-height: 1.8; color: #4A4239; font-weight: 300">
+        <p style="margin: 0">You are entitled to cancel your order within 30 days without giving any reason for doing so.</p>
+        <p style="margin: 0">The deadline for canceling an order is 30 days from the date you received the goods or on which a third party you have appointed, who is not the carrier, takes possession of the product delivered.</p>
+        <p style="margin: 0">In order to exercise your right of cancellation, you must inform us of your decision by means of a clear statement. You can inform us of your decision by e-mail at <a href="mailto:hello@saintscrew.co.in" style="border-bottom: 1px solid rgba(33,29,25,0.3)">hello@saintscrew.co.in</a>.</p>
+        <p style="margin: 0">We will reimburse you no later than 30 days from the day on which we receive the returned goods. We will use the same means of payment as you used for the order, and you will not incur any fees for such reimbursement.</p>
+      </div>
+      <h2 style="font-size: 12.5px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; margin: 48px 0 16px">Conditions for returns</h2>
+      <p style="font-size: 16px; line-height: 1.8; color: #4A4239; margin: 0 0 14px; font-weight: 300">In order for the goods to be eligible for a return, please make sure that:</p>
+      <ul style="margin: 0 0 24px; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; font-size: 16px; line-height: 1.7; color: #4A4239; font-weight: 300">
+        <li>The goods were purchased in the last 30 days</li>
+        <li>The goods are in the original packaging</li>
+      </ul>
+      <p style="font-size: 16px; line-height: 1.8; color: #4A4239; margin: 0 0 14px; font-weight: 300">The following goods cannot be returned:</p>
+      <ul style="margin: 0 0 24px; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; font-size: 16px; line-height: 1.7; color: #4A4239; font-weight: 300">
+        <li>The supply of goods made to your specifications or clearly personalized.</li>
+        <li>The supply of goods which according to their nature are not suitable to be returned, for example goods which deteriorate rapidly or where the date of expiry is over.</li>
+        <li>The supply of goods which are not suitable for return due to health protection or hygiene reasons and were unsealed after delivery.</li>
+        <li>The supply of goods which are, after delivery, according to their nature, inseparably mixed with other items.</li>
+      </ul>
+      <p style="font-size: 16px; line-height: 1.8; color: #4A4239; margin: 0; font-weight: 300">We reserve the right to refuse returns of any merchandise that does not meet the above return conditions at our sole discretion.</p>
+      <h2 style="font-size: 12.5px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; margin: 48px 0 16px">Returning goods</h2>
+      <p style="font-size: 16px; line-height: 1.8; color: #4A4239; margin: 0 0 18px; font-weight: 300">You are responsible for the cost and risk of returning the goods to us. You should send the goods to our studio: Name of street 12, Ludhiana, 141001.</p>
+      <p style="font-size: 16px; line-height: 1.8; color: #4A4239; margin: 0; font-weight: 300">We cannot be held responsible for goods damaged or lost in return shipment. Therefore, we recommend an insured and trackable mail service. We are unable to issue a refund without actual receipt of the goods or proof of received return delivery.</p>
+      <h2 style="font-size: 12.5px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; margin: 48px 0 16px">Gifts</h2>
+      <p style="font-size: 16px; line-height: 1.8; color: #4A4239; margin: 0 0 18px; font-weight: 300">If the goods were marked as a gift when purchased and then shipped directly to you, you'll receive a gift credit for the value of your return. Once the returned product is received, a gift certificate will be mailed to you.</p>
+      <p style="font-size: 16px; line-height: 1.8; color: #4A4239; margin: 0; font-weight: 300">If the goods weren't marked as a gift when purchased, or the gift giver had the order shipped to themselves to give it to you later, we will send the refund to the gift giver.</p>
+      <h2 style="font-size: 12.5px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; margin: 48px 0 16px">Contact us</h2>
+      <p style="font-size: 16px; line-height: 1.8; color: #4A4239; margin: 0 0 40px; font-weight: 300">If you have any questions about our Returns and Refunds Policy, please contact us by e-mail at <a href="mailto:hello@saintscrew.co.in" style="border-bottom: 1px solid rgba(33,29,25,0.3)">hello@saintscrew.co.in</a>.</p>
+      <div style="border-top: 1px solid rgba(33,29,25,0.16); padding-top: 28px; display: flex; gap: 24px; flex-wrap: wrap">
+        <a href="#" onClick="{{ goSize }}" style="font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600">Size guide</a>
+        <a href="https://www.saintscrew.co.in/privacy-policy" target="_blank" style="font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600">Privacy Policy</a>
+        <a href="https://www.saintscrew.co.in/terms-and-conditions" target="_blank" style="font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600">Terms conditions</a>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isSize }}" hint-placeholder-val="{{ false }}">
+    <main class="sc-pad" style="max-width: 960px; margin: 0 auto; padding: 96px 48px 110px; animation: scFade 0.4s ease both">
+      <p style="font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: #A6714F; margin: 0 0 24px; font-weight: 600">Info</p>
+      <h1 style="font-family: Marcellus, Georgia, serif; font-size: clamp(32px, 4.6vw, 58px); line-height: 1.06; margin: 0 0 24px; letter-spacing: -0.018em">Size guide</h1>
+      <p style="font-size: 16px; line-height: 1.8; color: #4A4239; margin: 0 0 48px; max-width: 60ch; font-weight: 300">A size chart is a document that reflects the measurements for your size range within your brand. Our chart is being photographed with the autumn run; until then, send us your chest and waist measurements and we will tell you which size to take.</p>
+      <h2 style="font-family: Marcellus, Georgia, serif; font-size: 26px; margin: 0 0 20px">Upper body</h2>
+      <div style="position: relative; overflow: hidden; margin-bottom: 20px; aspect-ratio: 21/8; background: #EAE2D7">
+        <img src="assets/tex-linen.jpg" alt="Linen weave" style="width: 100%; height: 100%; object-fit: cover" />
+        <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(20,17,14,0.28)">
+          <p style="font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: #F7F3ED; margin: 0; font-weight: 600">Size chart artwork goes here</p>
+        </div>
+      </div>
+      <p style="font-size: 15px; line-height: 1.7; color: #6E6459; margin: 0 0 48px; font-weight: 300">Knitwear and shirting run XS to XL. Trousers run 28 to 36. Both are cut generously — if you are between sizes on a sweater, size down.</p>
+      <h2 style="font-size: 12.5px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; margin: 0 0 18px">Read more</h2>
+      <div style="display: flex; gap: 24px; flex-wrap: wrap; border-top: 1px solid rgba(33,29,25,0.16); padding-top: 24px">
+        <a href="#" onClick="{{ goShipping }}" style="font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600">Shipping &amp; returns</a>
+        <a href="https://www.saintscrew.co.in/privacy-policy" target="_blank" style="font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600">Privacy Policy</a>
+        <a href="https://www.saintscrew.co.in/terms-and-conditions" target="_blank" style="font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600">Terms conditions</a>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ cartOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; inset: 0; z-index: 100; display: flex; justify-content: flex-end">
+      <div onClick="{{ toggleCart }}" style="position: absolute; inset: 0; background: rgba(20,17,14,0.42); animation: scFade 0.3s ease both"></div>
+      <aside style="position: relative; width: min(440px, 100%); background: #F7F3ED; display: flex; flex-direction: column; animation: scSlide 0.42s cubic-bezier(.2,.7,.2,1) both">
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 26px 28px; border-bottom: 1px solid rgba(33,29,25,0.12)">
+          <p style="font-size: 12.5px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; margin: 0; white-space: nowrap">Your bag ({{ count }})</p>
+          <button onClick="{{ toggleCart }}" style="background: none; border: none; font-size: 26px; line-height: 1; cursor: pointer; color: #211D19">×</button>
+        </div>
+        <div style="flex: 1; overflow-y: auto; padding: 8px 28px">
+          <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ true }}">
+            <div style="padding: 56px 0">
+              <p style="font-family: Marcellus, Georgia, serif; font-size: 24px; margin: 0 0 10px">Nothing in here yet.</p>
+              <p style="font-size: 15px; line-height: 1.7; color: #6E6459; margin: 0 0 24px; font-weight: 300">The collection is small on purpose. Have a look.</p>
+              <a href="#" onClick="{{ goShopFromCart }}" style="font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; border-bottom: 1px solid rgba(33,29,25,0.3); padding-bottom: 4px">Shop the collection</a>
+            </div>
+          </sc-if>
+          <sc-for list="{{ lines }}" as="l" hint-placeholder-count="0">
+            <div style="display: flex; gap: 16px; padding: 20px 0; border-bottom: 1px solid rgba(33,29,25,0.09)">
+              <div style="flex: 0 0 84px; height: 105px; background: #DED3C6; overflow: hidden">
+                <div role="img" aria-label="{{ l.name }}" style="width: 100%; height: 100%; background-size: cover; background-position: center; background-image: url({{ l.img }})"></div>
+              </div>
+              <div style="flex: 1">
+                <p style="font-size: 15.5px; font-weight: 500; margin: 0 0 4px">{{ l.name }}</p>
+                <p style="font-size: 13px; color: #8B8074; margin: 0 0 10px">Size {{ l.size }} · Qty {{ l.qty }}</p>
+                <button onClick="{{ l.onRemove }}" style="background: none; border: none; padding: 0; cursor: pointer; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #8B8074">Remove</button>
+              </div>
+              <p style="font-size: 15px; margin: 0; font-variant-numeric: tabular-nums">{{ l.total }}</p>
+            </div>
+          </sc-for>
+        </div>
+        <div style="padding: 24px 28px 28px; border-top: 1px solid rgba(33,29,25,0.12)">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px">
+            <span style="font-size: 15px">Subtotal</span>
+            <span style="font-size: 15px; font-variant-numeric: tabular-nums">{{ subtotal }}</span>
+          </div>
+          <p style="font-size: 13px; color: #8B8074; margin: 0 0 20px">{{ shippingNote }}</p>
+          <button style="width: 100%; background: #211D19; color: #F7F3ED; border: none; padding: 19px; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; cursor: pointer" style-hover="background: #A6714F">Checkout</button>
+        </div>
+      </aside>
+    </div>
+  </sc-if>
+
+  <section style="background: #EAE2D7; padding: 84px 24px">
+    <div style="max-width: 620px; margin: 0 auto; text-align: center">
+      <h2 style="font-family: Marcellus, Georgia, serif; font-size: clamp(26px, 3vw, 38px); margin: 0 0 14px; letter-spacing: -0.01em">Four letters a year, no more</h2>
+      <p style="font-size: 15.5px; line-height: 1.7; color: #6E6459; margin: 0 0 32px; font-weight: 300">A note when a new run is finished, and nothing in between.</p>
+      <sc-if value="{{ subscribed }}" hint-placeholder-val="{{ false }}">
+        <p style="font-size: 15.5px; margin: 0; color: #A6714F; font-weight: 500">You're on the list. Welcome.</p>
+      </sc-if>
+      <sc-if value="{{ notSubscribed }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center">
+          <input value="{{ email }}" onChange="{{ onSubEmail }}" placeholder="Email address" style="flex: 1 1 260px; background: transparent; border: none; border-bottom: 1px solid rgba(33,29,25,0.34); padding: 13px 2px; font-size: 16px; color: #211D19; outline: none">
+          <button onClick="{{ onSubscribe }}" style="background: #211D19; color: #F7F3ED; border: none; padding: 15px 38px; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; cursor: pointer" style-hover="background: #A6714F">Submit</button>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <footer style="background: #211D19; color: #EDE5DA; padding: 76px 0 34px">
+    <div class="sc-pad" style="max-width: 1440px; margin: 0 auto; padding: 0 48px">
+      <div class="sc-split" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 56px; padding-bottom: 56px; flex-wrap: wrap">
+        <div style="flex: 0 0 auto">
+          <img src="assets/saints-crew-logo-white.png" alt="Saints Crew" style="width: 170px; height: auto; display: block; margin: 2px 0 26px">
+          <p style="font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; margin: 0 0 12px; font-weight: 600">Address</p>
+          <p style="font-size: 14.5px; line-height: 1.7; color: rgba(237,229,218,0.62); margin: 0">Name of street 12, Ludhiana,<br />Post code 141001</p>
+        </div>
+        <div class="sc-footcols">
+        <sc-for list="{{ footer }}" as="col" hint-placeholder-count="4">
+          <div>
+            <p style="font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; margin: 0 0 18px; font-weight: 600">{{ col.title }}</p>
+            <div style="display: flex; flex-direction: column; gap: 11px">
+              <sc-for list="{{ col.items }}" as="it" hint-placeholder-count="4">
+                <a href="{{ it.href }}" onClick="{{ it.onClick }}" style="font-size: 14.5px; color: rgba(237,229,218,0.62)" style-hover="color: #EDE5DA">{{ it.label }}</a>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+        </div>
+      </div>
+      <div style="border-top: 1px solid rgba(237,229,218,0.16); padding-top: 24px; display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between">
+        <p style="font-size: 13px; color: rgba(237,229,218,0.5); margin: 0">© 2026 Saints Crew. All rights reserved.</p>
+        <p style="font-size: 13px; color: rgba(237,229,218,0.5); margin: 0">Ludhiana, India</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+const IM = {
+  knit: "assets/card-knit.jpg",
+  polo: "assets/card-trouser.jpg",
+  linen: "assets/card-shirt.jpg",
+  poplin: "assets/card-hero.jpg",
+  chore: "assets/card-cb2.jpg",
+  trouserW: "assets/card-trouser-w.jpg",
+  blazer: "assets/card-studio.jpg"
+};
+
+const PRODUCTS = [
+  { id: "p1", name: "Aran Cable Sweater", cat: "Knitwear", gender: "Men", price: 5400, img: IM.knit, fibre: "Undyed lambswool",
+    desc: "Hand-framed cables in undyed lambswool, knitted to a heavy 7-gauge so it holds its shape through a winter of wearing. Ribbed cuffs, saddle shoulder, no lining and nothing to shed.",
+    specs: [["Fibre", "100% undyed lambswool"], ["Made in", "Ludhiana, Punjab"], ["Care", "Hand wash cool, dry flat"], ["Fit", "Relaxed \u2014 size down for a close fit"]] },
+  { id: "p2", name: "Ribbed Knit Polo", cat: "Knitwear", gender: "Women", price: 4200, img: IM.polo, fibre: "Fine merino",
+    desc: "A short-sleeve polo in fine-gauge merino rib, open at the collar and cut boxy through the body. Fully fashioned, so the seams follow the shoulder rather than being cut through the knit.",
+    specs: [["Fibre", "100% extra-fine merino"], ["Made in", "Ludhiana, Punjab"], ["Care", "Machine wash wool cycle"], ["Fit", "Boxy, true to size"]] },
+  { id: "p3", name: "Washed Linen Shirt", cat: "Shirts", gender: "Women", price: 3200, img: IM.linen, fibre: "Washed linen",
+    desc: "Washed European linen, softened before it is cut so it arrives already broken in. Long in the body, dropped shoulder, mother-of-pearl buttons. It creases. That is the point.",
+    specs: [["Fibre", "100% washed linen"], ["Made in", "Ludhiana, Punjab"], ["Care", "Machine wash cool, line dry"], ["Fit", "Easy through the body"]] },
+  { id: "p4", name: "Cotton Poplin Shirt", cat: "Shirts", gender: "Men", price: 3600, img: IM.poplin, fibre: "Organic poplin",
+    desc: "A clean organic poplin shirt with a soft collar that stands without fusing. Single-needle side seams, split yoke, cut to be worn open over a tee or closed under knitwear.",
+    specs: [["Fibre", "100% organic cotton poplin"], ["Made in", "Ludhiana, Punjab"], ["Care", "Machine wash 30\u00b0"], ["Fit", "Regular"]] },
+  { id: "p6", name: "Wide-Leg Cotton Trouser", cat: "Trousers", gender: "Women", price: 3900, img: IM.trouserW, fibre: "Heavy cotton",
+    desc: "A wide, high-rise trouser in a heavy cotton that holds a line without stiffness. Deep pockets, plain front, cut to fall straight from the hip.",
+    specs: [["Fibre", "100% organic cotton"], ["Made in", "Ludhiana, Punjab"], ["Care", "Machine wash 30\u00b0"], ["Hem", "Left long \u2014 we will finish it free"]] },
+  { id: "p7", name: "Cotton Chore Jacket", cat: "Outerwear", gender: "Men", price: 5800, img: IM.chore, fibre: "Cotton canvas",
+    desc: "A workwear jacket in undyed cotton canvas that stiffens in the rain and softens again as it dries. Three patch pockets, tack-stitched at every stress point.",
+    specs: [["Fibre", "100% cotton canvas"], ["Made in", "Ludhiana, Punjab"], ["Care", "Machine wash 30\u00b0, tumble low"], ["Fit", "Roomy, sized to layer"]] },
+  { id: "p8", name: "Tailored Wool Blazer", cat: "Outerwear", gender: "Women", price: 7900, img: IM.blazer, fibre: "Wool suiting",
+    desc: "A soft-shouldered single-breasted blazer in wool suiting, half-canvassed so it moulds to the wearer instead of holding a fixed line. Two buttons, patch pockets, unlined sleeves.",
+    specs: [["Fibre", "100% wool suiting"], ["Made in", "Ludhiana, Punjab"], ["Care", "Dry clean"], ["Fit", "Clean through the waist"]] }
+];
+
+const NAV = [
+  ["Shop", "shop"], ["About", "about"], ["Our values", "values"], ["Contact", "contact"]
+];
+
+const money = n => "₹" + n.toLocaleString("en-IN");
+
+class Component extends DCLogic {
+  state = {
+    page: "home", pid: null, cat: "All", gender: "All", size: null,
+    cart: [], cartOpen: false, navOpen: false,
+    email: "", subscribed: false,
+    form: { name: "", email: "", msg: "" }, sent: false
+  };
+
+  go = (page) => { this.setState({ page, navOpen: false, cartOpen: false }); window.scrollTo(0, 0); };
+
+  open = (pid) => { this.setState({ page: "product", pid, size: null, navOpen: false }); window.scrollTo(0, 0); };
+
+  add = () => {
+    const p = PRODUCTS.find(x => x.id === this.state.pid);
+    if (!p) return;
+    const size = this.state.size || "M";
+    const cart = this.state.cart.slice();
+    const hit = cart.find(l => l.id === p.id && l.size === size);
+    if (hit) hit.qty += 1; else cart.push({ id: p.id, size: size, qty: 1 });
+    this.setState({ cart, size, cartOpen: true });
+  };
+
+  renderVals() {
+    const s = this.state;
+    const active = "#211D19", dim = "#8B8074", line = "rgba(33,29,25,0.85)", none = "transparent";
+
+    const nav = NAV.map(([label, page]) => ({
+      label, onClick: (e) => { e.preventDefault(); this.go(page); },
+      col: s.page === page ? active : "#4A4239",
+      line: s.page === page ? line : none
+    }));
+
+    const toCat = (label) => (e) => { e.preventDefault(); this.setState({ cat: label, gender: "All" }); this.go("shop"); };
+
+    const decorate = p => ({
+      ...p, priceText: money(p.price),
+      onOpen: (e) => { e.preventDefault(); this.open(p.id); }
+    });
+
+    const shown = PRODUCTS.filter(p =>
+      (s.cat === "All" || p.cat === s.cat) && (s.gender === "All" || p.gender === s.gender)
+    ).map(decorate);
+
+    const filters = ["All", "Knitwear", "Shirts", "Trousers", "Outerwear"].map(label => ({
+      label, onClick: () => this.setState({ cat: label }),
+      col: s.cat === label ? active : dim, line: s.cat === label ? line : none
+    }));
+
+    const genders = ["All", "Women", "Men"].map(label => ({
+      label, onClick: () => this.setState({ gender: label }),
+      col: s.gender === label ? active : dim, line: s.gender === label ? line : none
+    }));
+
+    const raw = PRODUCTS.find(p => p.id === s.pid) || PRODUCTS[0];
+    const sizeList = raw.cat === "Trousers" ? ["28", "30", "32", "34", "36"] : ["XS", "S", "M", "L", "XL"];
+    const pd = {
+      ...decorate(raw),
+      sizes: sizeList.map(label => ({
+        label,
+        onClick: () => this.setState({ size: label }),
+        bg: s.size === label ? "#211D19" : "transparent",
+        fg: s.size === label ? "#F7F3ED" : "#211D19",
+        bd: s.size === label ? "#211D19" : "rgba(33,29,25,0.28)"
+      })),
+      specs: raw.specs.map(([k, v]) => ({ k, v }))
+    };
+
+    const lines = s.cart.map((l, i) => {
+      const p = PRODUCTS.find(x => x.id === l.id);
+      return {
+        name: p.name, img: p.img, size: l.size, qty: l.qty,
+        total: money(p.price * l.qty),
+        onRemove: () => this.setState({ cart: s.cart.filter((_, j) => j !== i) })
+      };
+    });
+    const sub = s.cart.reduce((a, l) => a + PRODUCTS.find(x => x.id === l.id).price * l.qty, 0);
+    const count = s.cart.reduce((a, l) => a + l.qty, 0);
+
+    return {
+      nav, filters, genders, shown, pd, lines, count,
+      goKnitwear: toCat("Knitwear"), goShirts: toCat("Shirts"), goTrousers: toCat("Trousers"), goOuterwear: toCat("Outerwear"),
+      featured: [PRODUCTS[0], PRODUCTS[2], PRODUCTS[4], PRODUCTS[6]].map(decorate),
+      stockLine: shown.length === 1 ? "1 piece in stock." : shown.length + " pieces in stock.",
+      noResults: shown.length === 0,
+      resetFilters: (e) => { e.preventDefault(); this.setState({ cat: "All", gender: "All" }); },
+      subtotal: money(sub),
+      shippingNote: sub >= 6000 ? "Shipping is on us." : "Free shipping from ₹6,000 — " + money(6000 - sub) + " to go.",
+      cartEmpty: s.cart.length === 0,
+      sizeHint: s.size ? "Size " + s.size + " selected." : "Select a size. Unsure? See the size guide.",
+      isHome: s.page === "home", isShop: s.page === "shop", isProduct: s.page === "product",
+      isAbout: s.page === "about", isValues: s.page === "values", isContact: s.page === "contact",
+      isBlog: s.page === "blog", isShipping: s.page === "shipping", isSize: s.page === "sizeguide",
+      navOpen: s.navOpen, cartOpen: s.cartOpen,
+      email: s.email, subscribed: s.subscribed, notSubscribed: !s.subscribed,
+      form: s.form, sent: s.sent, notSent: !s.sent,
+      goHome: (e) => { e.preventDefault(); this.go("home"); },
+      goShop: (e) => { if (e && e.preventDefault) e.preventDefault(); this.go("shop"); },
+      goShopFromCart: (e) => { e.preventDefault(); this.go("shop"); },
+      goAbout: (e) => { e.preventDefault(); this.go("about"); },
+      goValues: (e) => { e.preventDefault(); this.go("values"); },
+      goShipping: (e) => { e.preventDefault(); this.go("shipping"); },
+      goSize: (e) => { e.preventDefault(); this.go("sizeguide"); },
+      toggleNav: () => this.setState({ navOpen: !s.navOpen }),
+      toggleCart: () => this.setState({ cartOpen: !s.cartOpen, navOpen: false }),
+      addToBag: this.add,
+      onSubEmail: (e) => this.setState({ email: e.target.value }),
+      onSubscribe: () => { if (s.email.indexOf("@") > 0) this.setState({ subscribed: true }); },
+      onName: (e) => this.setState({ form: { ...s.form, name: e.target.value } }),
+      onEmail: (e) => this.setState({ form: { ...s.form, email: e.target.value } }),
+      onMsg: (e) => this.setState({ form: { ...s.form, msg: e.target.value } }),
+      onSend: () => { if (s.form.email.indexOf("@") > 0) this.setState({ sent: true }); },
+      pillars: [
+        { title: "Small runs", body: "Forty to sixty pieces per style. When a run sells out we wait until the next one is properly made." },
+        { title: "Traceable fibre", body: "Wool, linen and cotton only. We can name the mill for every yarn we buy." },
+        { title: "Mended free", body: "Send anything back within two years and we will repair it at no charge." },
+        { title: "Made in Punjab", body: "One workshop in Ludhiana, visited monthly, paid above the local garment rate." }
+      ],
+      stands: [
+        { title: "Sustainability", body: "We want to be around for a long time, and to do that, we need to look after our planet. That's why our business practices and production methods are fully certified sustainable by the Jackson Foundation Sustainability Board." },
+        { title: "Carbon neutral", body: "Whenever possible, we use carbon-neutral production and delivery methods, but sometimes our options are limited. When that happens, we compensate for the carbon emissions by actively contributing to various emission reduction programs." },
+        { title: "Quality", body: "In our minds, quality doesn't always have to be only synonymous with high prices. We've worked hard to create products that don't have a high price tag, but that comply with our internal, extremely high quality standards." },
+        { title: "Organic", body: "In order to do our share for the planet and its people, we only use sustainably-sourced organic cotton in our fashion. This way, we can do our bit to end modern slavery and third-world poverty, and support small-scale farmers directly." }
+      ],
+      story: [
+        { title: "The hat", body: "Two of us, one hat between us, and a long argument about whose it was. We solved it by making a second one, badly, and then a third that was worth keeping." },
+        { title: "The long game", body: "The hats turned into knitwear, then shirting, then trousers. What did not change was the batch size or the habit of standing in the workshop while things are made." },
+        { title: "Menswear, and then some", body: "We set out to change menswear for the better. Half our customers were buying women's sizes within a year, so the range grew to meet them." },
+        { title: "Where we are now", body: "One studio, one workshop, four drops a year, and a repairs bench that stays busy — which we take as the compliment it is." }
+      ],
+      steps: [
+        { n: "01", title: "Fibre we can name", body: "Undyed lambswool, extra-fine merino, organic cotton and European linen. Nothing synthetic in the face cloth, and no blend we cannot separate at the end of a garment's life." },
+        { n: "02", title: "Dyed in short baths", body: "Colour is added in small lots using low-water baths, which is why our palette moves slightly between runs. We would rather show the variation than waste the water." },
+        { n: "03", title: "Cut and sewn in one place", body: "Every piece is made in a single workshop in Ludhiana. We visit monthly, pay above the local garment rate, and keep the same team season after season." },
+        { n: "04", title: "Sent plainly, mended freely", body: "Recycled paper, no plastic, no branded tissue. Within two years we will repair any Saints Crew garment for nothing but the postage." }
+      ],
+      contactRows: [
+        { k: "Email", v: "hello@saintscrew.co.in" },
+        { k: "Phone & WhatsApp", v: "+91 123 456 7890" },
+        { k: "Studio", v: "Name of street 12, Ludhiana, 141001 — visits by appointment" },
+        { k: "Hours", v: "Monday to Saturday, 10am to 7pm IST" }
+      ],
+      footer: [
+        { title: "Shop", items: [
+          { label: "Knitwear", href: "#", onClick: toCat("Knitwear") },
+          { label: "Shirts", href: "#", onClick: toCat("Shirts") },
+          { label: "Trousers", href: "#", onClick: toCat("Trousers") },
+          { label: "Outerwear", href: "#", onClick: toCat("Outerwear") },
+          { label: "Blog", href: "#", onClick: (e) => { e.preventDefault(); this.go("blog"); } }
+        ] },
+        { title: "Info", items: [
+          { label: "Shipping & returns", href: "#", onClick: (e) => { e.preventDefault(); this.go("shipping"); } },
+          { label: "Size guide", href: "#", onClick: (e) => { e.preventDefault(); this.go("sizeguide"); } },
+          { label: "Privacy Policy", href: "https://www.saintscrew.co.in/privacy-policy" },
+          { label: "Terms conditions", href: "https://www.saintscrew.co.in/terms-and-conditions" }
+        ] },
+        { title: "Follow", items: [
+          { label: "Facebook", href: "https://www.facebook.com" },
+          { label: "Instagram", href: "https://www.instagram.com/saintscrewoutfits" },
+          { label: "WhatsApp", href: "https://www.whatsapp.com/" }
+        ] },
+        { title: "Contact us", items: [
+          { label: "hello@saintscrew.co.in", href: "mailto:hello@saintscrew.co.in" },
+          { label: "+91 123 456 7890", href: "tel:+911234567890" }
+        ] }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

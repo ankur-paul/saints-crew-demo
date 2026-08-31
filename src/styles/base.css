@@ -1,0 +1,75 @@
+/* Reset, document defaults and global affordances. */
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--sc-paper);
+}
+
+body {
+  font-family: var(--sc-font-body);
+  color: var(--sc-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Set while the bag or the mobile menu is open, so the page behind cannot scroll. */
+body.is-locked { overflow: hidden; }
+
+a { color: var(--sc-ink); text-decoration: none; }
+a:hover { color: var(--sc-clay); }
+
+img { display: block; }
+input, textarea, button { font-family: var(--sc-font-body); }
+button { color: inherit; }
+
+::selection { background: var(--sc-select); }
+:focus-visible { outline: 2px solid var(--sc-clay); outline-offset: 3px; }
+
+.sc-skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+  background: var(--sc-ink);
+  color: var(--sc-shell);
+  padding: 12px 20px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.sc-skip:focus { left: 8px; top: 8px; color: var(--sc-shell); }
+
+/* Visible to screen readers only. */
+.sc-sr {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes sc-fade  { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes sc-rise  { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+@keyframes sc-slide { from { transform: translateX(100%); }             to { transform: none; } }
+
+.sc-anim-fade { animation: sc-fade 0.4s ease both; }
+.sc-anim-rise { animation: sc-rise 0.9s var(--sc-ease) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .sc-zoom { transform: none !important; }
+}
+
+/* Shown only when JavaScript is unavailable. */
+.sc-nojs { max-width: 620px; margin: 0 auto; padding: 96px 24px; }
+.sc-nojs h1 { font-family: var(--sc-font-display); font-size: 34px; letter-spacing: 0.02em; margin: 0 0 16px; }
+.sc-nojs p  { font-size: 16px; line-height: 1.75; color: var(--sc-mute); font-weight: 300; margin: 0 0 24px; }
+.sc-nojs a  { border-bottom: 1px solid var(--sc-rule-input); }

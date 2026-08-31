@@ -1,0 +1,144 @@
+/* Typographic roles. Named for what the text *is*, not how it looks, so the scale
+   can be retuned in one place. */
+
+/* Small uppercase accent above a heading. */
+.t-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--sc-clay);
+  font-weight: 600;
+  margin: 0 0 24px;
+}
+
+/* Uppercase micro-label: form labels, footer column titles, spec keys. */
+.t-label {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Uppercase link or button face: nav, CTAs, inline "read more" links. */
+.t-action {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.t-action-sm {
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.t-nav {
+  font-size: 12.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Display headings, largest to smallest. */
+.t-display {
+  font-family: var(--sc-font-display);
+  font-size: clamp(36px, 5.4vw, 72px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  margin: 0 0 32px;
+  text-wrap: balance;
+}
+
+.t-h1 {
+  font-family: var(--sc-font-display);
+  font-size: clamp(36px, 5vw, 68px);
+  letter-spacing: -0.015em;
+  margin: 0 0 14px;
+}
+
+.t-h1-tight {
+  font-family: var(--sc-font-display);
+  font-size: clamp(34px, 4.6vw, 60px);
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+  margin: 0 0 24px;
+}
+
+.t-h1-policy {
+  font-family: var(--sc-font-display);
+  font-size: clamp(32px, 4.6vw, 58px);
+  line-height: 1.06;
+  letter-spacing: -0.018em;
+  margin: 0 0 40px;
+}
+
+.t-h2 {
+  font-family: var(--sc-font-display);
+  font-size: clamp(28px, 3.2vw, 44px);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.t-h2-lg {
+  font-family: var(--sc-font-display);
+  font-size: clamp(30px, 3.6vw, 52px);
+  line-height: 1.06;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.t-h2-alt {
+  font-family: var(--sc-font-display);
+  font-size: clamp(28px, 3.4vw, 46px);
+  letter-spacing: -0.01em;
+  margin: 0 0 48px;
+}
+
+.t-h3 {
+  font-family: var(--sc-font-display);
+  font-size: 24px;
+  margin: 0 0 12px;
+}
+
+.t-h3-sm { font-family: var(--sc-font-display); font-size: 22px; margin: 0 0 12px; }
+
+/* Section heading rendered at label size (policy pages). */
+.t-h-label {
+  font-size: 12.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Body copy. */
+.t-lead {
+  font-size: clamp(17px, 1.5vw, 21px);
+  line-height: 1.7;
+  color: var(--sc-ink-soft);
+  margin: 0;
+  font-weight: 300;
+  max-width: 62ch;
+}
+
+.t-body {
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--sc-mute);
+  font-weight: 300;
+}
+
+.t-body-dark { font-size: 16px; line-height: 1.75; color: var(--sc-ink-soft); font-weight: 300; }
+.t-body-sm   { font-size: 15.5px; line-height: 1.75; color: var(--sc-mute); font-weight: 300; margin: 0; }
+.t-prose     { font-size: 16px; line-height: 1.8;  color: var(--sc-ink-soft); font-weight: 300; }
+
+.t-meta      { font-size: 13px; color: var(--sc-mute-light); margin: 0; }
+.t-caption   { font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sc-mute-light); margin: 0; }
+
+/* Underlined text link used inline and beneath sections. */
+.t-underline { border-bottom: 1px solid var(--sc-rule-input); padding-bottom: 4px; }
+.t-underline-thin { border-bottom: 1px solid rgba(33, 29, 25, 0.22); padding-bottom: 2px; }
+
+.t-num { font-variant-numeric: tabular-nums; }

@@ -1,0 +1,64 @@
+/* Containers, gutters and the responsive rules shared across pages. */
+
+.sc-page { min-height: 100vh; background: var(--sc-paper); overflow-x: hidden; }
+
+/* Horizontal gutter. Collapses to --sc-gutter-sm on handsets. */
+.sc-pad { padding-left: var(--sc-gutter); padding-right: var(--sc-gutter); }
+
+/* Centred containers at each of the three measures the design uses. */
+.sc-wrap        { max-width: var(--sc-page); margin: 0 auto; }
+.sc-wrap-read   { max-width: var(--sc-read); margin: 0 auto; }
+.sc-wrap-wide   { max-width: 1200px; margin: 0 auto; }
+.sc-wrap-mid    { max-width: 1100px; margin: 0 auto; }
+.sc-wrap-narrow { max-width: 960px;  margin: 0 auto; }
+.sc-wrap-policy { max-width: 860px;  margin: 0 auto; }
+
+/* Vertical rhythm. */
+.sc-sec       { padding-top: 96px; padding-bottom: 96px; }
+.sc-sec-page  { padding-top: 96px; padding-bottom: 110px; }
+.sc-sec-shop  { padding-top: 72px; padding-bottom: 100px; }
+
+/* Two columns side by side that stack on handsets. */
+.sc-split { display: flex; }
+
+/* Panel that follows the reader down a long page, until the layout stacks. */
+.sc-sticky { position: sticky; top: var(--sc-header-h); }
+
+/* Auto-fitting product/editorial grids. */
+.sc-grid-cards    { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+.sc-grid-shop     { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 28px 20px; }
+.sc-grid-pillars  { display: grid; grid-template-columns: repeat(auto-fit,  minmax(240px, 1fr)); gap: 44px; }
+.sc-grid-story    { display: grid; grid-template-columns: repeat(auto-fit,  minmax(260px, 1fr)); gap: 40px 56px; }
+.sc-grid-stands   { display: grid; grid-template-columns: repeat(auto-fit,  minmax(280px, 1fr)); gap: 44px 56px; }
+
+/* Category tiles: two up, four up on wide screens. */
+.sc-grid-cats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+@media (min-width: 1100px) { .sc-grid-cats { grid-template-columns: repeat(4, 1fr); } }
+
+/* Footer link columns: two up, four up on desktop. */
+.sc-footcols {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 36px 40px;
+  align-content: start;
+  align-items: start;
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 660px;
+}
+@media (min-width: 1025px) {
+  .sc-footcols { grid-template-columns: repeat(4, 1fr); flex: 1 1 440px; width: auto; }
+}
+
+/* Desktop / handset swap. 1024px is the one breakpoint the design uses. */
+.sc-desktop { display: flex; }
+.sc-mobile  { display: none; }
+
+@media (max-width: 1024px) {
+  .sc-desktop { display: none !important; }
+  .sc-mobile  { display: flex !important; }
+  .sc-split   { flex-direction: column !important; align-items: stretch !important; }
+  .sc-pad     { padding-left: var(--sc-gutter-sm) !important; padding-right: var(--sc-gutter-sm) !important; }
+  /* A panel cannot usefully stick once the columns are stacked. */
+  .sc-sticky  { position: static !important; }
+}
